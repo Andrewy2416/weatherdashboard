@@ -1,0 +1,40 @@
+.searchColumn {
+    background-color:white;
+}
+
+h2, h3 {
+    padding-top: 5px;
+    font-weight: 500;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+.bg-primary, .input-group {
+    margin-bottom: 8px;
+}
+
+.btn-group-vertical {
+    width: 100%;
+    display: inline-block;
+}
+
+#currentWeather {
+    border: solid 1px rgba(0,0,0,.125);
+    border-radius: 0.3rem;
+    margin: 15px 0 15px 0;
+    padding: 15px;
+}
+
+#previousSearch {
+    margin-bottom: 15px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+@media (max-width:768px) {
+    #previousSearch {
+        max-height: 152px;
+    }
+}
