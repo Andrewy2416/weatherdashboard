@@ -35,7 +35,7 @@ function returnWeatherForecast(cityName) {
 
     $.get(queryURL).then(function(response){
         let forecastInfo = response.list;
-        forecastDiv.empty();
+        forecastDiv.empty
         $.each(forecastInfo, function(i) {
             if (!forecastInfo[i].dt_txt.includes("12:00:00")) {
                 return;
@@ -60,6 +60,34 @@ function returnWeatherForecast(cityName) {
         })
     })
 };
+
+//function to display UVIndex//
+function returnUVIndex(coordinates) {
+    let queryURL = `https://api.openweathermap.org/data/2.5/uvi?lat=${coordinates.lat}&lon=${coordinates.lon}&APPID=${apiKey}`;
+
+    $.get(queryURL).then(function(response){
+        let currUVIndex = response.value;
+        let uvSeverity = "green";
+        let textColour = "white"
+        //Color change based on UV index
+        if (currUVIndex >= 11) {
+            uvSeverity = "purple";
+        } else if (currUVIndex >= 8) {
+            uvSeverity = "dark red";
+        } else if (currUVIndex >= 6) {
+            uvSeverity = "maroon";
+            textColour = "black"
+        } else if (currUVIndex >= 3) {
+            uvSeverity = "sunflower";
+            textColour = "black"
+        }
+        currWeatherDiv.append(`<p>UV Index: <span class="text-${textColour} uvPadding" style="background-color: ${uvSeverity};">${currUVIndex}</span></p>`);
+    })
+}
+
+
+
+
 
 
 
