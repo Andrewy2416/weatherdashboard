@@ -76,12 +76,12 @@ function returnUVIndex(coordinates) {
         if (currUVIndex >= 11) {
             uvSeverity = "purple";
         } else if (currUVIndex >= 8) {
-            uvSeverity = "dark red";
+            uvSeverity = "red";
         } else if (currUVIndex >= 6) {
-            uvSeverity = "maroon";
+            uvSeverity = "orange";
             textColour = "black"
         } else if (currUVIndex >= 3) {
-            uvSeverity = "sunflower";
+            uvSeverity = "yellow";
             textColour = "black"
         }
         currWeatherDiv.append(`<p>UV Index: <span class="text-${textColour} uvPadding" style="background-color: ${uvSeverity};">${currUVIndex}</span></p>`);
@@ -98,8 +98,10 @@ function createHistoryButton(cityName) {
     
     if (!citiesArray.includes(cityName)){
         citiesArray.push(cityName);
-        localStorage.setItem("localWeatherSearches", JSON.stringify(citiesArray)
+        localStorage.setItem("localWeatherSearches", JSON.stringify(citiesArray))
     }
+    
+    
 
     $("#previousSearch").prepend(`
     <button class="btn btn-light cityHistoryBtn" value='${cityName}'>${cityName}</button>
