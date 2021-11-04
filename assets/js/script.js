@@ -26,7 +26,6 @@ function returnCurrentWeather(cityName) {
         <p>Humidity: ${response.main.humidity} </p>
         <p>Wind Speed: ${response.wind.speed} </p>
         `, returnUVIndex(response.coord))
-        createHistoryButton(response.name);
     })
 };
 
@@ -36,6 +35,7 @@ function returnWeatherForecast(cityName) {
     $.get(queryURL).then(function(response){
         let forecastInfo = response.list;
         forecastDiv.empty
+        createHistoryButton(response.name);
         $.each(forecastInfo, function(i) {
             if (!forecastInfo[i].dt_txt.includes("12:00:00")) {
                 return;
@@ -82,6 +82,30 @@ function returnUVIndex(coordinates) {
             textColour = "black"
         }
         currWeatherDiv.append(`<p>UV Index: <span class="text-${textColour} uvPadding" style="background-color: ${uvSeverity};">${currUVIndex}</span></p>`);
+    })
+}
+
+function createHistoryButton(cityName) {
+    // Check if the button exists in history, and if it does, exit the function
+    var citySearch = cityName.trim();
+    var buttonCheck = $(`#previousSearch > BUTTON[value='${citySearch}']`);
+    if (buttonCheck.length == 1) {
+      return;
+    }
+    
+    if (!citiesArray.includes(cityName)){
+        citiesArray.push(cityName);
+        localStorage.setItem("localWeatherSearches", JSON.stringify(citiesArray);
+    }
+
+    $("#previousSearch").prepend(`
+    <button class="btn btn-light cityHistoryBtn" value='${cityName}'>${cityName}</button>
+    `);
+}
+
+function writeSearchHistory(array) {
+    $.each(array, function(i) {
+        createHistoryButton(array[i]);
     })
 }
 
