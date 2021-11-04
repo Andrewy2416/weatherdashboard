@@ -14,6 +14,7 @@ if (localStorage.getItem("localWeatherSearches")) {
 };
 
 function returnCurrentWeather(cityName) {
+    //added function into API call//
     let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&APPID=${apiKey}`;
 
     $.get(queryURL).then(function(response){
@@ -26,16 +27,17 @@ function returnCurrentWeather(cityName) {
         <p>Humidity: ${response.main.humidity} </p>
         <p>Wind Speed: ${response.wind.speed} </p>
         `, returnUVIndex(response.coord))
+         createHistoryButton(response.name);
     })
 };
 
 function returnWeatherForecast(cityName) {
+    //added function into API call//
     let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&APPID=${apiKey}`;
 
     $.get(queryURL).then(function(response){
         let forecastInfo = response.list;
-        forecastDiv.empty
-        createHistoryButton(response.name);
+        forecastDiv.empty();
         $.each(forecastInfo, function(i) {
             if (!forecastInfo[i].dt_txt.includes("12:00:00")) {
                 return;
@@ -63,6 +65,7 @@ function returnWeatherForecast(cityName) {
 
 //function to display UVIndex//
 function returnUVIndex(coordinates) {
+    //added function into API call//
     let queryURL = `https://api.openweathermap.org/data/2.5/uvi?lat=${coordinates.lat}&lon=${coordinates.lon}&APPID=${apiKey}`;
 
     $.get(queryURL).then(function(response){
@@ -86,7 +89,7 @@ function returnUVIndex(coordinates) {
 }
 
 function createHistoryButton(cityName) {
-    // Check if the button exists in history, and if it does, exit the function
+    //see if there is a city similar to the name. If not it shows the previous city.
     var citySearch = cityName.trim();
     var buttonCheck = $(`#previousSearch > BUTTON[value='${citySearch}']`);
     if (buttonCheck.length == 1) {
@@ -95,7 +98,7 @@ function createHistoryButton(cityName) {
     
     if (!citiesArray.includes(cityName)){
         citiesArray.push(cityName);
-        localStorage.setItem("localWeatherSearches", JSON.stringify(citiesArray);
+        localStorage.setItem("localWeatherSearches", JSON.stringify(citiesArray)
     }
 
     $("#previousSearch").prepend(`
@@ -109,12 +112,19 @@ function writeSearchHistory(array) {
     })
 }
 
-
-
-
-
-
-
-// Get a deafult weather search
+//deafult weather search
 returnCurrentWeather("Berkeley");
 returnWeatherForecast("Berkeley");
+
+$("#submitCity").click(function() {
+    preventDefault();
+    let cityName = $("#cityInput").val();
+    returnCurrentWeather(cityName);
+    returnWeatherForecast(cityName);
+});
+
+$("#previousSearch").click(function() {
+    let cityName = target.value;
+    returnCurrentWeather(cityName);
+    returnWeatherForecast(cityName);
+})
