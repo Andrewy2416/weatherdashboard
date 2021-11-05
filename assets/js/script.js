@@ -46,7 +46,7 @@ function returnWeatherForecast(cityName) {
             let forecastDate = new Date(forecastInfo[i].dt*1000);
             let weatherIcon = `https://openweathermap.org/img/wn/${forecastInfo[i].weather[0].icon}.png`;
 
-
+            //appending dynamically added HTML//
             forecastDiv.append(`
             <div class="col-md">
                 <div class="card text-white bg-primary">
@@ -114,19 +114,21 @@ function writeSearchHistory(array) {
     })
 }
 
-//deafult weather search
+//default weather search
 returnCurrentWeather("Berkeley");
 returnWeatherForecast("Berkeley");
 
 $("#submitCity").click(function() {
-    preventDefault();
+    //tried adding event listeners for event//
+    event.preventDefault();
     let cityName = $("#cityInput").val();
     returnCurrentWeather(cityName);
     returnWeatherForecast(cityName);
 });
 
 $("#previousSearch").click(function() {
-    let cityName = target.value;
+    //tried adding event listeners for event//
+    let cityName = event.target.value;
     returnCurrentWeather(cityName);
     returnWeatherForecast(cityName);
 })
