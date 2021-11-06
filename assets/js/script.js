@@ -107,7 +107,7 @@ function createHistoryButton(cityName) {
     <button class="btn btn-light cityHistoryBtn" value='${cityName}'>${cityName}</button>
     `);
 }
-
+//local storage//
 function writeSearchHistory(array) {
     $.each(array, function(i) {
         createHistoryButton(array[i]);
